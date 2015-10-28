@@ -1,0 +1,53 @@
+<apex:page controller="PagingTasksController">
+    <apex:form >
+        <apex:pageBlock title="Tasks" id="pgBlock">
+           <apex:pageBlockButtons >
+               <apex:commandButton action="{!save}" id="saveButton" value="Save"/>
+               <apex:commandButton onclick="resetInlineEdit()" id="cancelButton" value="Cancel"/>
+           </apex:pageBlockButtons>
+  
+        <apex:inlineEditSupport showOnEdit="saveButton, cancelButton"
+                    hideOnEdit="editButton" event="ondblclick"
+                    changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+  
+         <apex:inputText id="searchBox" value="{!searchText}"/>
+        <apex:commandButton value="Search" reRender="pgTable,pgBlock" action="{!findTasks}"/>
+          <apex:pageBlockTable value="{!Tasks}" var="tsk" id="pgTable" >
+           <apex:column >
+            <apex:outputLink value="{!URLFOR($Action.Task.Delete, tsk.id,['retURL'='/apex/Task_Assignment_Features'])}" >Delete</apex:outputLink>
+</apex:column>
+        
+          <apex:column headerValue="Subject">
+
+                <apex:facet name="header">
+                    <apex:commandLink value="Subject" action="{!toggleSort}" rerender="pgTable" >
+                    <apex:param name="sortField" value="Subject" assignTo="{!sortField}"/>
+                    <apex:outputPanel rendered="{!BEGINS(sortField,'Subject')}">
+                        &nbsp;<apex:image value="{!IF(sortDir = 'desc','/img/arrowDown.gif','/img/arrowUp.gif')}"/>
+                    </apex:outputPanel>
+                    </apex:commandLink>
+                </apex:facet>     
+               
+                <apex:outputField value="{!tsk.Subject}"/>
+           </apex:column>
+           <apex:column headerValue="Status">
+             <apex:outputField value="{!tsk.Status}"/>
+         </apex:column>
+         <apex:column headerValue="Priority">
+            <apex:outputField value="{!tsk.Priority}"/>
+        </apex:column>
+        <apex:column headerValue="OwnerId">
+            <apex:outputField value="{!tsk.OwnerId}"/>
+        </apex:column>
+     </apex:pageBlockTable>
+       <apex:pageBlockButtons >
+                <apex:commandButton value="Previous" action="{!Previous}" rerender="pgTable,pgBlock"
+                                    status="status" disabled="{!DisablePrevious}" />
+                <apex:commandButton value="Next" action="{!Next}" reRender="pgTable,pgBlock"
+                                    status="status" disabled="{!DisableNext}" />
+                <apex:actionStatus id="status" startText="Please Wait..."/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+     <apex:enhancedlist type="Activity" height="800" rowsPerPage="50" customizable="False"/>
+</apex:page>
