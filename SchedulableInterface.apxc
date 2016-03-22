@@ -1,0 +1,11 @@
+global with sharing class WarehouseUtil implements
+        Schedulable {
+        
+        //General Constructor
+        global WarehouseUtil() {}
+        
+        //Scheduled execute
+        global void execute(SchedulableContext ctx) {
+            //Use static method for checking dated invoices
+            WarehouseUtil.checkForDatedInvoices();
+        }
