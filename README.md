@@ -25,6 +25,11 @@ Like other object-oriented programming languages, Apex supports constructs like 
  Execution Context has two characteristics:
    - It defines the scope and lifetime of statics variables.
    - It defines the context for those governor limits that are reset between execution contexts.
+   
+ Key facts:
+   - Static variables are maintained throughout an execution context, and are unique to an execution context.
+   - Many (but not all) limits are reset between execution context.  For example, if governor limits restrict you to 100          database queries in an execution context, each execution context can have 100 database queries.  
+   - You can know when execution context start.  Generally, you dont know when it ends.
 
 
 ## Quick Links
