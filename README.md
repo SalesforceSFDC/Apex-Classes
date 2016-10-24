@@ -21,3 +21,7 @@ As a language, Apex is:
 ## Apex Language Highlights
 
 Like other object-oriented programming languages,  
+
+
+## Quick Links
+ * [Advanced Apex Programming](http://advancedapex.com/samplecode/)
